@@ -40,9 +40,17 @@
 
                         $ichild = IPS_GetInstance($child['ObjectID']);
 
+                        // Wenn SMTP
                         if ($ichild['ModuleInfo']['ModuleName'] == "SMTP") {
 
                             SMTP_SendMail($ichild['InstanceID'], $Betreff, $Text);
+
+                        }
+
+                        // Wenn MultiMail
+                        if ($ichild['ModuleInfo']['ModuleName'] == "SymconMultiMail") {
+
+                            MultiMail_SendMail($ichild['InstanceID'], $Betreff, $Text);
 
                         }
 
@@ -62,7 +70,13 @@
 
                                 SMTP_SendMail($target['InstanceID'], $Betreff, $Text);
     
-                            }    
+                            }   
+                            
+                            if ($target['ModuleInfo']['ModuleName'] == "SymconMultiMail") {
+
+                                MultiMail_SendMail($target['InstanceID'], $Betreff, $Text);
+    
+                            }   
 
                         }
 
@@ -95,6 +109,12 @@
 
                         }
 
+                        if ($ichild['ModuleInfo']['ModuleName'] == "SymconMultiMail") {
+
+                            MultiMail_SendMailAttachment($ichild['InstanceID'], $Betreff, $Text, $Attachment);
+
+                        }
+
                     }
 
                     // Wenn Link
@@ -107,11 +127,19 @@
 
                             $target = IPS_GetInstance($target['ObjectID']);
 
+                            // Wenn SMTP
                             if ($target['ModuleInfo']['ModuleName'] == "SMTP") {
 
                                 SMTP_SendMailAttachment($target['InstanceID'], $Betreff, $Text, $Attachment);
     
-                            }     
+                            }   
+                            
+                            // Wenn MultiMail
+                            if ($target['ModuleInfo']['ModuleName'] == "SymconMultiMail") {
+
+                                MultiMail_SendMailAttachment($target['InstanceID'], $Betreff, $Text, $Attachment);
+    
+                            }
 
                         }
 
