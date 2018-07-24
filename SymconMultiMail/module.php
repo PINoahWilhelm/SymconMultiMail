@@ -1,0 +1,128 @@
+<?
+    // Klassendefinition
+    class SymconMultiMail extends IPSModule {
+ 
+        // Der Konstruktor des Moduls
+        // Überschreibt den Standard Kontruktor von IPS
+        public function __construct($InstanceID) {
+            // Diese Zeile nicht löschen
+            parent::__construct($InstanceID);
+ 
+            
+        }
+ 
+        // Überschreibt die interne IPS_Create($id) Funktion
+        public function Create() {
+
+            parent::Create();
+ 
+        }
+ 
+        // Überschreibt die intere IPS_ApplyChanges($id) Funktion
+        public function ApplyChanges() {
+           
+            parent::ApplyChanges();
+
+        }
+
+        public function SendMail ($Betreff, $Text) {
+
+            if (IPS_HasChildren($this->InstanceID)) {
+
+                $children = IPS_GetObject($this->InstanceID);
+
+                foreach ($children['ChildrenIDs'] as $child) {
+
+                    $child = IPS_GetObject($child);
+
+                    // Wenn Instanz
+                    if ($child['ObjectType'] == 1) {
+
+                        $child = IPS_GetInstance($child['ObjectID']);
+
+                        if ($child['ModuleInfo']['ModuleName'] == "SMTP") {
+
+                            SMTP_SendMail($child['InstanceID'], $Betreff, $Text);
+
+                        }
+
+                    }
+
+                    // Wenn Link
+                    if ($child['ObjectType'] == 6) {
+
+                        $child = IPS_GetLink($child['ObjectID']);
+                        $target = IPS_GetObject($child['TargetID']);
+
+                        if ($target['ObjectType'] == 1) {
+
+                            $target = IPS_GetInstance($target['ObjectID']);
+
+                            if ($target['ModuleInfo']['ModuleName'] == "SMTP") {
+
+                                SMTP_SendMail($target['InstanceID'], $Betreff, $Text);
+    
+                            }    
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        public function SendMailAttachment ($Betreff, $Text, $Attachment) {
+
+            if (IPS_HasChildren($this->InstanceID)) {
+
+                $children = IPS_GetObject($this->InstanceID);
+
+                foreach ($children['ChildrenIDs'] as $child) {
+
+                    $child = IPS_GetObject($child);
+
+                    // Wenn Instanz
+                    if ($child['ObjectType'] == 1) {
+
+                        $child = IPS_GetInstance($child['ObjectID']);
+
+                        if ($child['ModuleInfo']['ModuleName'] == "SMTP") {
+
+                            SMTP_SendMailAttachment($child['InstanceID'], $Betreff, $Text, $Attachment);
+
+                        }
+
+                    }
+
+                    // Wenn Link
+                    if ($child['ObjectType'] == 6) {
+
+                        $child = IPS_GetLink($child['ObjectID']);
+                        $target = IPS_GetObject($child['TargetID']);
+
+                        if ($target['ObjectType'] == 1) {
+
+                            $target = IPS_GetInstance($target['ObjectID']);
+
+                            if ($target['ModuleInfo']['ModuleName'] == "SMTP") {
+
+                                SMTP_SendMailAttachment($target['InstanceID'], $Betreff, $Text, $Attachment);
+    
+                            }     
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+ 
+    }
+?>

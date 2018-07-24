@@ -1,0 +1,14 @@
+{
+    "id": "{ff79302f-a5e1-4303-a898-5067bd14c379}",
+    "name": "SymconMultiMail",
+    "type": 3,
+    "vendor": "prointernet",
+    "aliases":
+    [
+        "SymconMultiMail"
+    ],  
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "MultiMail"
+}
