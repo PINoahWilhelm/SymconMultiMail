@@ -38,11 +38,11 @@
                     // Wenn Instanz
                     if ($child['ObjectType'] == 1) {
 
-                        $child = IPS_GetInstance($child['ObjectID']);
+                        $ichild = IPS_GetInstance($child['ObjectID']);
 
-                        if ($child['ModuleInfo']['ModuleName'] == "SMTP") {
+                        if ($ichild['ModuleInfo']['ModuleName'] == "SMTP") {
 
-                            SMTP_SendMail($child['InstanceID'], $Betreff, $Text);
+                            SMTP_SendMail($ichild['InstanceID'], $Betreff, $Text);
 
                         }
 
@@ -87,11 +87,11 @@
                     // Wenn Instanz
                     if ($child['ObjectType'] == 1) {
 
-                        $child = IPS_GetInstance($child['ObjectID']);
+                        $ichild = IPS_GetInstance($child['ObjectID']);
 
-                        if ($child['ModuleInfo']['ModuleName'] == "SMTP") {
+                        if ($ichild['ModuleInfo']['ModuleName'] == "SMTP") {
 
-                            SMTP_SendMailAttachment($child['InstanceID'], $Betreff, $Text, $Attachment);
+                            SMTP_SendMailAttachment($ichild['InstanceID'], $Betreff, $Text, $Attachment);
 
                         }
 
